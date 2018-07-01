@@ -1,0 +1,395 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+
+<!-- Mirrored from eservices.imi.gov.my/myimms/js/popcal.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Mar 2018 14:27:05 GMT -->
+<head>
+<style type="text/css">
+a:link { text-decoration: none;}
+a:visited { text-decoration: none;}
+TD { text-align: center; vertical-align: middle;}
+.CalHead { font:bold 8pt Arial; color: navy;}
+.CalCell { font:8pt Arial; cursor: hand;}
+.HeadBtn { vertical-align:middle; height:22; width:18; font:10pt Fixedsys;}
+.HeadBox { vertical-align:middle; font:10pt;}
+.Today { font:bold 8pt Arial; color:navy;}
+</style>
+</head>
+<body leftmargin=0 topmargin=0 marginwidth=0 marginheight=0>
+
+<script>
+<!-- Begin Configurable Part
+var giStartYear = 1900;
+var giEndYear = 2050;
+var giCellWidth = 22;
+var gMonthsTitle = new Array("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+var gMonthsTitleMys = new Array("Jan","Feb","Mac","Apr","Mei","Jun","Jul","Ogs","Sep","Okt","Nov","Dis");
+var gMonths = new Array("1","2","3","4","5","6","7","8","9","10","11","12");
+var WeekDay = new Array("Su","Mo","Tu","We","Th","Fr","Sa");
+var WeekDayMys = new Array("Ah","Is","Se","Ra","Kh","Ju","Sa");
+var gcOtherDay = "silver";
+var gcToggle = "#CDE66A";
+var gcBG = "white";
+var gcTodayBG = "#D6E1FE";
+var gcFrame = "#C0E1FF";
+var gcHead = "white";
+var gcWeekend = "red";
+var gcWorkday = "black";
+var gcCalBG = "#6181FF";
+//-- End Configurable Part -->
+
+<!-- Begin Non-editable part
+var gcTemp = gcBG;
+var gdCurDate = new Date();
+var giYear = gdCurDate.getFullYear();
+var giMonth = gdCurDate.getMonth()+1;
+var giDay = gdCurDate.getDate();
+var tbMonSelect, tbYearSelect;
+var gCellSet = new Array;
+var gfPop = parent.document.getElementById(self.name);
+var gdCtrl = new Object;
+var gdLang = parent.document.getElementById("hdCurrLang");
+var flag;
+var gToday = "Today";
+
+//****************************************************************************
+// Here, you could modify the date format as you need !
+//****************************************************************************
+function fSetDate(iYear, iMonth, iDay){
+if(flag=="")
+{
+gdCtrl.value =ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear; // <--Modify this
+gdCtrl.focus();
+gdCtrl.blur();
+ 	 gfPop.style.visibility = "hidden";
+}
+else
+{
+var curdate=ForDay(giDay)+"/"+ForMon(gMonths[giMonth-1])+"/"+giYear;
+var selectDate=ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear;
+var diff=dateDiff(selectDate,curdate)
+
+if (diff>=0)
+{
+if ( flag == "StartDate" )  {
+ 	gdCtrl.value =ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear; // <--Modify this
+ 	 gfPop.style.visibility = "hidden";
+	parent.document.forms[0].EndDate.value=gdCtrl.value;
+
+	//parent.startdt_onChange();
+	}
+
+else if (flag == "EndDate")
+ {
+var startDate=parent.document.forms[0].StartDate.value;
+var endDate=ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear;
+
+var diff1=dateDiff(endDate,startDate)
+
+if (diff1<0)
+{
+alert("Start Date should be prior to End Date.")
+}
+else
+{
+ gdCtrl.value =ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear; // <--Modify this
+  gfPop.style.visibility = "hidden";
+}
+ //parent.enddt_onChange();
+
+}
+}
+
+else
+{
+ gdCtrl.value =ForDay(iDay)+"/"+ForMon(gMonths[iMonth-1])+"/"+iYear; // <--Modify this
+ gfPop.style.visibility = "hidden";
+//alert("Start Date should be prior to Current Date")
+//return false;
+}
+}
+
+}
+
+//****************************************************************************
+// Param: popCtrl is the widget beyond which you want popup this calendar;
+//        dateCtrl is the widget into which you want to put the selected date;
+//****************************************************************************
+function fPopCalendar(popCtrl, dateCtrl, anEvent){
+
+if ((popCtrl=="StartDate") || (popCtrl=="EndDate"))
+{
+  flag = popCtrl;
+}
+else
+{
+  flag = "";
+}
+  anEvent.cancelBubble=true;
+  gdCtrl = parent.document.getElementById(dateCtrl);
+  var pc = parent.document.getElementById(popCtrl);
+if (gdCtrl.value=="")
+{
+var selected_Year = giYear;
+var selected_Month = giMonth
+}
+else
+{
+selected_date=new Date();
+  var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/; // requires 4 digit year
+
+ var matchArray =gdCtrl.value.match(datePat); // is the format ok?
+month=matchArray[3];
+day=matchArray[1];
+year=matchArray[4];
+date1temp = new Date(month+"/"+day+"/"+year+ " " + "00:00:00");
+//date1temp = new Date(dateform.StartDate.value + " " + dateform.StartTime.value);
+selected_date.setTime(date1temp.getTime());
+var selected_Year=selected_date.getFullYear();
+var selected_Month=selected_date.getMonth()+1;
+}
+// fSetYearMon(giYear, giMonth);
+  fSetYearMon(selected_Year, selected_Month);
+   var point = fGetXY(pc);
+  with (gfPop.style) {
+  	left = (point.x-1)+"px";
+	top  = (point.y+pc.offsetHeight+1)+"px";
+	visibility = "visible";
+  }
+}
+
+function Point(iX, iY){
+	this.x = iX;
+	this.y = iY;
+}
+
+function fGetXY(aTag){
+  var pt = new Point(aTag.offsetLeft, aTag.offsetTop);
+  do {
+  	aTag = aTag.offsetParent;
+  	pt.x += aTag.offsetLeft;
+  	pt.y += aTag.offsetTop;
+  } while(aTag.tagName!="BODY" && aTag.tagName!="HTML");
+  return pt;
+}
+
+function fSetSelected(aCell){
+  var iOffset = 0;
+  var iYear = parseInt(tbSelYear.value);
+  var iMonth = parseInt(tbSelMonth.value);
+
+  aCell.bgColor = gcBG;
+  with (aCell.firstChild){
+  	var iDate = parseInt(innerHTML);
+  	if (style.color==gcOtherDay)
+		iOffset = (id<10)?-1:1;
+	iMonth += iOffset;
+	if (iMonth<1) {
+		iYear--;
+		iMonth = 12;
+	}else if (iMonth>12){
+		iYear++;
+		iMonth = 1;
+	}
+  }
+
+  fSetDate(iYear, iMonth, iDate);
+}
+
+function fBuildCal(iYear, iMonth) {
+  var aMonth=new Array();
+  for(i=1;i<7;i++)
+  	aMonth[i]=new Array(i);
+
+  var dCalDate=new Date(iYear, iMonth-1, 1);
+  var iDayOfFirst=dCalDate.getDay();
+  var iDaysInMonth=new Date(iYear, iMonth, 0).getDate();
+  var iOffsetLast=new Date(iYear, iMonth-1, 0).getDate()-iDayOfFirst+1;
+  var iDate = 1;
+  var iNext = 1;
+
+  for (d = 0; d < 7; d++)
+	aMonth[1][d] = (d<iDayOfFirst)?-(iOffsetLast+d):iDate++;
+  for (w = 2; w < 7; w++)
+  	for (d = 0; d < 7; d++)
+		aMonth[w][d] = (iDate<=iDaysInMonth)?iDate++:-(iNext++);
+  return aMonth;
+}
+
+function fDrawCal(iCellWidth) {
+  var styleTD = " width='"+iCellWidth+"' ";            //Coded by Liming Weng(Victor Won)  email:victorwon@netease.com
+
+  with (document) {
+	write("<tr>");
+	for(i=0; i<7; i++){
+            if( gdLang.value == 'en' || gdLang.value == 'EN' )
+                write("<td class='CalHead' "+styleTD+">" + WeekDay[i] + "</td>");
+            else
+                write("<td class='CalHead' "+styleTD+">" + WeekDayMys[i] + "</td>");
+        }
+	write("</tr>");
+
+  	for (w = 1; w < 7; w++) {
+		write("<tr>");
+		for (d = 0; d < 7; d++) {
+			write("<td class='CalCell' "+styleTD+" onMouseOver='gcTemp=this.bgColor;this.bgColor=gcToggle;this.bgColor=gcToggle' onMouseOut='this.bgColor=gcTemp;this.bgColor=gcTemp' onclick='fSetSelected(this)'>");
+			write("<A href='#null' onfocus='this.blur();'>00</A></td>")
+		}
+		write("</tr>");
+	}
+  }
+}
+
+function fUpdateCal(iYear, iMonth) {
+  myMonth = fBuildCal(iYear, iMonth);
+  var i = 0;
+  var iDate = 0;
+  for (w = 0; w < 6; w++)
+	for (d = 0; d < 7; d++)
+		with (gCellSet[(7*w)+d]) {
+			id = i++;
+			if (myMonth[w+1][d]<0) {
+				style.color = gcOtherDay;
+				innerHTML = -myMonth[w+1][d];
+				iDate = 0;
+			}else{
+				style.color = ((d==0)||(d==6))?gcWeekend:gcWorkday;
+				innerHTML = myMonth[w+1][d];
+				iDate++;
+			}
+			parentNode.bgColor = ((iYear==giYear)&&(iMonth==giMonth)&&(iDate==giDay))?gcTodayBG:gcBG;
+			parentNode.bgColor = parentNode.bgColor;
+		}
+}
+
+function fSetYearMon(iYear, iMon){
+  tbSelMonth.options[iMon-1].selected = true;
+  if (iYear>giEndYear) iYear=giEndYear;
+  if (iYear<giStartYear) iYear=giStartYear;
+  tbSelYear.options[iYear-giStartYear].selected = true;
+  fUpdateCal(iYear, iMon);
+}
+
+function fPrevMonth(){
+  var iMon = tbSelMonth.value;
+  var iYear = tbSelYear.value;
+
+  if (--iMon<1) {
+	  iMon = 12;
+	  iYear--;
+  }
+
+  fSetYearMon(iYear, iMon);
+}
+
+function fNextMonth(){
+  var iMon = tbSelMonth.value;
+  var iYear = tbSelYear.value;
+
+  if (++iMon>12) {
+	  iMon = 1;
+	  iYear++;
+  }
+
+  fSetYearMon(iYear, iMon);
+}
+
+with (document) {
+  write("<table id='popTable' bgcolor='"+gcCalBG+"' cellspacing='0' cellpadding='3' border='0'><TR>");
+  write("<td align='center'><input type='button' value='<' class='HeadBtn' onClick='fPrevMonth()'>");
+  write("&nbsp;&nbsp;&nbsp;&nbsp;<select id='tbMonSelect' class='HeadBox' onChange='fUpdateCal(tbSelYear.value, tbSelMonth.value)' Victor='Won'>");
+  for (i=0; i<12; i++){
+    if( gdLang.value == 'en' || gdLang.value == 'EN' )
+        write("<option value='"+(i+1)+"'>"+gMonthsTitle[i]+"</option>");
+    else{
+        write("<option value='"+(i+1)+"'>"+gMonthsTitleMys[i]+"</option>");
+        gToday = "Hari Ini";}
+  }
+  write("</SELECT> <SELECT id='tbYearSelect' class='HeadBox' onChange='fUpdateCal(tbSelYear.value, tbSelMonth.value)' Victor='Won'>");
+  for(i=giStartYear;i<=giEndYear;i++)
+	write("<OPTION value='"+i+"'>"+i+"</OPTION>");
+  write("</SELECT>&nbsp;&nbsp;&nbsp;&nbsp;<input type='button' value='>' class='HeadBtn' onclick='fNextMonth()'>");
+  write("</td></TR><TR><td align='center'>");
+  write("<DIV style='background-color:"+gcFrame+";width:"+((giCellWidth+6)*7+2)+"px;'><table border='0' cellpadding='2' >");
+  tbSelMonth = getElementById("tbMonSelect");
+  tbSelYear = getElementById("tbYearSelect");
+  fDrawCal(giCellWidth);
+  gCellSet = getElementsByTagName("A");
+  fSetYearMon(giYear, giMonth);
+  write("</table></DIV></td></TR><TR><TD align='center'>");
+  write("<A href='#null' class='Today' onclick='fSetDate(giYear,giMonth,giDay); this.blur(); ' onMouseOver='gcTemp=this.style.color;this.style.color=gcToggle' onMouseOut='this.style.color=gcTemp'>"+gToday+" :&nbsp;"+giDay+"/ "+gMonths[giMonth-1]+"/"+giYear+"</A>");
+  write("</TD></TR></TD></TR><TR></TR></TABLE>");
+
+  gfPop.width = getElementById("popTable").offsetWidth;
+  gfPop.height = getElementById("popTable").offsetHeight;
+}
+
+function ForDay(i)
+{
+var day=i + ""
+if (day.length<2)
+{
+var newday="0" + i
+return newday
+}
+else
+{
+return i
+}
+}
+
+function ForMon(i)
+{
+var mon=i + ""
+if (mon.length<2)
+{
+var newmon="0" + i
+return newmon
+}
+else
+{
+return i
+}
+}
+
+function dateDiff(dt1,dt2) {
+
+date1 = new Date();
+date2 = new Date();
+diff  = new Date();
+var datePat = /^(\d{1,2})(\/|-)(\d{1,2})\2(\d{4})$/; // requires 4 digit year
+
+// Validates first date
+var matchArray = dt1.match(datePat); // is the format ok?
+month=matchArray[3];
+day=matchArray[1];
+year=matchArray[4];
+date1temp = new Date(month+"/"+day+"/"+year+ " " + "00:00:00");
+date1.setTime(date1temp.getTime());
+
+
+//Validates second date
+var matchArray1 = dt2.match(datePat); // is the format ok?
+month=matchArray1[3];
+day=matchArray1[1];
+year=matchArray1[4];
+date2temp = new Date(month+"/"+day+"/"+year+ " " + "00:00:00");
+date2.setTime(date2temp.getTime());
+
+// sets difference date to difference of first date and second date
+
+diff.setTime(date1.getTime() - date2.getTime());
+
+timediff = diff.getTime();
+
+days = Math.floor(timediff / (1000 * 60 * 60 * 24));
+timediff -= days * (1000 * 60 * 60 * 24);
+
+
+return days
+}
+</script>
+
+</body>
+
+<!-- Mirrored from eservices.imi.gov.my/myimms/js/popcal.html by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 18 Mar 2018 14:27:05 GMT -->
+</html>

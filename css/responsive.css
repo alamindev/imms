@@ -1,0 +1,21 @@
+/*start media query*/
+
+@media screen and (max-width:990px) {
+	 
+	#mobile-demo{
+	display: block;
+	}
+	.logo {
+		padding: 7px 0px;
+		border-bottom: 1px solid #ccc; 
+		background: #e65100;
+		width:100%;
+	}
+	.page-footer { 
+	padding-left: 0px;
+	}
+	/*start coding for all main content*/
+	.wrpper{
+		padding-left: 0px;
+	}
+}

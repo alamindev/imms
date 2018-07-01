@@ -1,0 +1,387 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+/*******
+for customize scrollbar
+*******/
+::-webkit-scrollbar{
+	width: 8px;
+}
+::-webkit-scrollbar-thumb{
+	border-radius: 10px;
+	background: #34516E;
+}
+::-webkit-scrollbar-track{
+	border-radius: 10px;
+	background-color: #fff;
+}
+.row {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 5px;
+}
+.form-group input{
+	padding-left: 10px !important;
+}
+/*==============
+  start coding for defalut css
+  =============*/
+.text-center{
+  text-align:center;
+}
+.p-5 {
+	padding: 20px 34px 62px 20px;
+}
+.mt-0{
+    margin-top: 0;
+}
+.card-header {
+	background: #34516e;
+	padding: 5px 15px;
+	border-radius: 5px 5px 0px 0px;
+	box-shadow: 0px 12px 7px 0px #ccc;
+	color: white;
+	display: inline-block;
+	width: 100%; 
+    margin-bottom: 10px
+}
+.card-header p{
+	font-size: 16px;
+	font-weight: normal;
+}
+.card-footer{
+	background: #34516e;
+	padding: 5px 15px;
+	border-radius: 0px 0px 5px 5px;
+	box-shadow: 0px 12px 7px 0px #ccc;
+	color: white;
+}
+/*for color*/
+.card-danger{
+    background: #DF6054 !important;
+}
+.card-primary{
+    background: #27A8E0 !important;
+}
+.card-info{
+    background: #0077B5 !important;
+}
+.card-warning{
+    background: #FF9807 !important;
+}
+.btn-danger{
+	background: #E30B0B !important;
+}
+.btn-primary{
+	background: #2A5598 !important;
+}
+.btn-warning{
+	background: #FFCA00 !important;
+}
+.btn-info{
+	background: #8ECF8C !important;
+}
+.btn-secondary{
+	background: #C6E0DC !important;
+}
+.btn-success{
+	background: #009DFE !important;
+}
+.float-left{
+	float: left;
+}
+.float-right{
+	float: right;
+}
+.text-danger{
+	color: #FF3327;
+}
+.text-secondary{
+	color: #EAEAEA;
+}
+.text-info{
+	color: #0077B5;
+}
+.text-warning{
+	color: #FFCE43;
+}
+.text-light{
+	color: #fff;
+}
+.text-success{
+    color: #0eb4ba;
+}
+.text-center{
+    text-align: center;
+}
+.text-black{
+	color: #000000 !important;
+}
+/*for alart*/
+.success {
+	text-transform: capitalize;
+	text-align: center;
+	background: #635a32;
+	color: white;
+	font-size: 18px;
+	width: 100%;
+	padding: 10px 20px;
+	border-radius: 5px;
+	box-shadow: 0px 0px 10px 0px #888;
+	margin-bottom: 15px; 
+}
+/*login form middle center*/
+.login{
+	text-align: center;
+	margin: 0;
+	color: #c54c4ccc;
+	text-transform: uppercase;
+
+}
+.middle{
+  display: flex;
+  flex-wrap: wrap;
+  height: 100vh;
+  align-items: center;
+  margin: 0px;
+}
+.b-bottom{
+  border-bottom: 1px solid #ccc !important;
+}
+.input-field span{
+  margin-left: 45px;
+}
+/*------for styleing form------*/
+.form-group{
+    text-transform: capitalize;
+    margin-bottom: 15px;
+}
+.has-error .form-control{
+   border: 1px solid red !important;
+   box-shadow: 0px 0px 14px -2px red !important
+}
+.has-error label{
+    color: red;
+}
+.form-control {
+	border: 1px solid #ccc !important;
+	height: 34px !important;
+	box-shadow: 0px 2px 9px 0px #ccc !important;
+	margin-top: 8px !important;
+}
+label {
+	font-size: 1rem;
+	color: #6a696c;
+}
+
+/*
+1.top nav start coding and side bar
+ */
+
+/*  1.1  top nav    */
+.top-nav{
+	height: 78px !important;
+	position: fixed;
+	z-index: 9999;
+}
+nav .nav-wrapper {
+	position: relative;
+	height: 100%;
+}
+.top-nav{
+	color: #fff;
+	background-color: #34516E !important;
+	width: 100%;
+	line-height: 64px;
+}
+.top-position {
+	position: relative;
+	top: -71px;
+	right: 10px;
+}
+/* 1.2 side nav */
+#mobile-demo{
+	display: none;
+}
+#scroll{
+	overflow: hidden;
+}
+.logo {
+	padding: 7px 0px;
+	border-bottom: 1px solid #ccc;
+	background: #DF696E;
+	width: 250px;
+}
+.logo a{
+	text-align: center;
+	font-weight: bold;
+	display: block;
+	font-size: 25px !important;
+	color: #fff !important;
+}
+.sidenav {
+	position: fixed;
+	width: 250px;
+	top: 78px;
+
+}
+.img-rounded {
+	width: 50%;
+	border-radius: 125px;
+	margin: 15px 66px 6px 58px;
+	box-shadow: 1px 5px 20px 0px #ccc;
+}
+.profile{
+	border-bottom: 1px solid #ccc;
+}
+.online {
+	position: absolute;
+	right: 0;
+	padding-right: 13px;
+	padding-top: 11px;
+}
+.profile .person {
+	background: #eaeaea;
+	display: block;
+	padding: 10px;
+	text-align: center;
+	color: #8c0000;
+	font-size: 18px;
+	box-shadow: 0px 8px 11px #ccc;
+}
+.sidebar-wrapper{
+	padding-bottom: 165px;
+}
+.sidenav li {
+	float: none;
+	line-height: 48px;
+	border-bottom: 1px solid #e6e6e6;
+}
+.sidebar ul li {
+	background: #cccbcb;
+	border-bottom: 1px solid #3b3535;
+	transition: all 1s;
+}
+.sidebar ul li i {
+	 color: #eeff41;
+}
+
+.sidebar ul li a{
+	 color: rgba(0, 0, 0, 0.87);
+		display: block;
+		font-size: 14px;
+		font-weight: 500;
+		height: 48px;
+		line-height: 48px;
+	}
+.sidebar ul li a:hover {
+	background: #00264D;
+	 color: white;
+}
+.sidenav li > a > i, .sidenav li > a > [class^="mdi-"], .sidenav li > a li > a > [class*="mdi-"], .sidenav li > a > i.material-icons {
+	float: left;
+	height: 48px;
+	line-height: 48px;
+	margin: 0 32px 0 0;
+	width: 0px;
+	color: #34516E;
+}
+  .sidebar i{
+	font-size: 16px;
+	color: #34516E;
+}
+.arrow {
+	float: right;
+	width: 100%;
+}
+.patreon-ad {
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	height: 45px;
+	width: 250px;
+	background-color: #fff;
+	z-index: 1000;
+	border-top: 1px solid rgba(0,0,200,0.14);
+	text-align: center;
+	padding-top: 7px;
+}
+
+/*start coding for main content*/
+.wrpper {
+	padding-left: 250px;
+	box-sizing: border-box;
+	padding-top: 78px;
+	min-height: 100vh;
+	z-index: -1;
+}
+.container{
+	width: 98%;
+}
+
+/*for input group*/
+.input-field span{
+    margin-left: 0px;
+}
+
+.card-header p{
+    font-size: 26px; 
+}
+
+
+/*for breadcrumb */
+.bread-main{
+	margin-top: 10px;
+}
+/*style for home content*/
+.content{
+  padding: 9px;
+}
+.content .row{
+ margin: 0px;
+}
+.bg-icon {
+	font-size: 50px;
+	color: #279498;
+}
+.details{
+  float: right;
+}
+.details p {
+	margin: 0;
+	padding: 0;
+	font-size: 22px;
+	text-transform: capitalize;
+	color: #9c9fc8;
+}
+.details h4 {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+	color: #0eb4ba;
+}
+.content .card-content {
+	padding: 8px 12px;
+	border-top: 1px solid #f2e1e1;
+	margin-top: 15px;
+}
+/* last footer*/
+.page-footer {
+	padding-top: 20px;
+	color: #fff;
+	background-color: #ee6e73;
+	padding-left: 250px;
+}
+.footer-copyright{
+	width: 100%;
+}
+ 
+
+ /* for pdf styleing*/
+ @page { margin: 100px 25px; }
+    header { position: fixed; top: -60px; left: 0px; right: 0px; height: auto; }
+    footer { position: fixed; bottom: -60px; left: 0px; right: 0px; background-color: lightblue; height: 50px; }
+    .page { page-break-after: always; }
+    .page:last-child { page-break-after: never; }
